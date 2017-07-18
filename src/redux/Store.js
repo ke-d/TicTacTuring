@@ -5,20 +5,22 @@ import { createStore, applyMiddleware } from 'redux';
 
 const consoleMessages = store => next => action => {
 
-	let result
+	let result;
 
-	console.groupCollapsed(`dispatching action => ${action.type}`)
-	result = next(action)
+	console.log(`dispatching action => ${action.type}`);
 
-	console.log(`${store.getState()}`)
+	result = next(action);
 
-	console.groupEnd()
+	console.log(`${JSON.stringify(store.getState())}`);
 
-	return result
+	return result;
 
 }
 
 export default (initialState={}) => {
-	console.log("store", initialState);
+	// console.log("store", initialState);
 	return applyMiddleware(thunk,consoleMessages)(createStore)(appReducer, initialState)
 }
+
+
+// export default (initialState = {}) => createStore(appReducer, initialState)

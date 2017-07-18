@@ -5,12 +5,19 @@ export default class GameList extends Component {
   constructor(props) {
     super(props);
     let { games } = this.props;
-    console.log(games);
+    // console.log(games);
     const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1.id !== r2.id});
     this.state = { dataSource: ds.cloneWithRows(games), };
 
   }
-
+  componentWillReceiveProps(nextProps) {
+     if (nextProps.games !== this.props.games) {
+       let { games } = nextProps;
+       this.setState({
+         dataSource: this.state.dataSource.cloneWithRows(games)
+       });
+     }
+ }
   render() {
 
     return (

@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import {
   StyleSheet,
   Text,
-  View
+  View,
+  Button
 } from 'react-native';
 
 import GameList from './GameList';
@@ -13,20 +14,23 @@ export default class Profile extends Component {
     super(props);
   }
   componentDidMount() {
-    //console.log(initialState);
+
   }
 
   render() {
-    let { games, email } = this.props;
+    let { games, email, onNewGame} = this.props;
     return (
       <View style={styles.container}>
         <Text style={styles.welcome}>
           {`${email}`}
         </Text>
+        <Button title="Play Games" onPress={() => onNewGame("4", false, "2016-2-2")} />
         <GameList
           games={games}
         />
+
       </View>
+
     );
   }
 }

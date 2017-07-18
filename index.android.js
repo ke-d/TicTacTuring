@@ -1,10 +1,4 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- * @flow
- */
-
 import { AppRegistry } from 'react-native';
-import TicTacTuring from './components/app';
+import TicTacTuring from './src/App';
 
 AppRegistry.registerComponent('TicTacTuring', () => TicTacTuring);

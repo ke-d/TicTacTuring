@@ -1,6 +1,6 @@
-import C from './constants';
+import C from './Constants';
 import { combineReducers } from 'redux';
-import { AppNavigator } from '../components/AppNavigator';
+import { AppNavigator } from '../navigation/AppNavigator';
 
 const initialHome = AppNavigator.router.getStateForAction(AppNavigator.router.getActionForPathAndParams("Home"));
 

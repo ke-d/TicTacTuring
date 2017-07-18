@@ -1,4 +1,4 @@
-import C from './constants';
+import C from './Constants';
 
 export const addGame = (id, won, datePlayed) => ({
   type: C.ADD_GAME,

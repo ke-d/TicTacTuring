@@ -1,7 +1,7 @@
-import C from './constants';
-import appReducer from './reducers'
-import thunk from 'redux-thunk'
-import { createStore, applyMiddleware } from 'redux'
+import C from './Constants';
+import appReducer from './Reducers';
+import thunk from 'redux-thunk';
+import { createStore, applyMiddleware } from 'redux';
 
 const consoleMessages = store => next => action => {
 

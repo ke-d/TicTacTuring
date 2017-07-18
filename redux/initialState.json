@@ -1,0 +1,25 @@
+{
+  "user": {
+    "email": "test@email.com",
+    "games": [
+      {
+        "id": 1,
+        "won": true,
+        "datePlayed": "2017-2-2"
+      },
+      {
+        "id": 2,
+        "won": true,
+        "datePlayed": "2017-2-2"
+      },
+      {
+        "id": 3,
+        "won": false,
+        "datePlayed": "2017-2-3"
+      }
+    ]
+  },
+  "fetching": false,
+
+
+}

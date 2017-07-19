@@ -3,17 +3,38 @@ import {
   AppRegistry,
   StyleSheet,
   Button,
-  View
+  View,
+  TextInput
 } from 'react-native';
 
 
 export default class MainMenu extends Component {
-  static navigationOptions = { title: 'Welcome', };
-
+  static navigationOptions = { title: 'Welcome to TicTacTuring', };
+  constructor(props) {
+    super(props);
+    this.state = {
+       email: "",
+       password: ""
+     };
+  }
   render() {
     const { navigate } = this.props.navigation;
     return (
-      <Button title="Login" onPress={() => navigate('Profile', { name: 'Jane' }) } />
+      <View>
+      <TextInput
+        placeholder="email"
+        keyboardType="email-address"
+        onChangeText={(email) => this.setState({email})}
+        value={this.state.email}
+      />
+      <TextInput
+        placeholder="password"
+        secureTextEntry={true}
+        onChangeText={(password) => this.setState({password})}
+        value={this.state.password}
+      />
+      <Button title="Login" onPress={() => navigate("Profile", { name: 'Jane' }) } />
+      </View>
     );
   }
 }

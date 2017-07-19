@@ -3,7 +3,8 @@ import {
   StyleSheet,
   Text,
   View,
-  Button
+  Button,
+  ActivityIndicator
 } from 'react-native';
 
 import GameList from './GameList';
@@ -18,20 +19,38 @@ export default class Profile extends Component {
   }
 
   render() {
-    let { games, email, onNewGame} = this.props;
-    return (
-      <View style={styles.container}>
-        <Text style={styles.welcome}>
-          {`${email}`}
-        </Text>
-        <Button title="Play Games" onPress={() => onNewGame("4", false, "2016-2-2")} />
-        <GameList
-          games={games}
+    const { data: { loading, error, todos } } = this.props;
+
+    if(loading) {
+      return (
+
+        <ActivityIndicator
+          animating={true}
+          size="large"
         />
 
-      </View>
+      )
+    } else if(error) {
+      <Text style={styles.welcome}>
+        {`An Error has occured`}
+      </Text>
+    } else {
+      // console.log("email", this.props.data);
+      let { games, email} = this.props.data.User;
+      return (
+        <View style={styles.container}>
+          <Text style={styles.welcome}>
+            {`${email}`}
+          </Text>
+          <Button title="Play Games" onPress={() => onNewGame("4", false, "2016-2-2")} />
+          <GameList
+            games={games}
+          />
 
-    );
+        </View>
+
+      );
+    }
   }
 }
 

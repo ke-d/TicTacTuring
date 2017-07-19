@@ -1,8 +1,6 @@
 import C from './Constants';
-import appReducer from './Reducers';
-import thunk from 'redux-thunk';
-import { createStore, applyMiddleware } from 'redux';
-
+import createReducer from './Reducers';
+import { createStore, applyMiddleware, combineReducers } from 'redux';
 const consoleMessages = store => next => action => {
 
 	let result;
@@ -11,16 +9,19 @@ const consoleMessages = store => next => action => {
 
 	result = next(action);
 
-	console.log(`${JSON.stringify(store.getState())}`);
+	// console.log(`${JSON.stringify(store.getState())}`);
 
 	return result;
 
 }
 
-export default (initialState={}) => {
-	// console.log("store", initialState);
-	return applyMiddleware(thunk,consoleMessages)(createStore)(appReducer, initialState)
+export default (initialState = {}, client) => {
+	// return applyMiddleware(thunk,consoleMessages)(createStore)(appReducer, initialState)
+	const rootReducer = createReducer(client.reducer())
+	// console.log("store", rootReducer);
+	return createStore(
+		rootReducer,
+		initialState,
+		applyMiddleware(...[consoleMessages, client.middleware()])
+	);
 }
-
-
-// export default (initialState = {}) => createStore(appReducer, initialState)

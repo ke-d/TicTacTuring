@@ -17,7 +17,8 @@ export default class GameList extends Component {
          dataSource: this.state.dataSource.cloneWithRows(games)
        });
      }
- }
+  }
+
   render() {
 
     return (

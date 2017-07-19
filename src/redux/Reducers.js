@@ -50,11 +50,14 @@ export const fetching = (state = false, action) => {
   }
 }
 
-export default combineReducers({
-  nav,
-  user: combineReducers({
-    email,
-    games
-  }),
-  fetching
-});
+export default createReducer = (apollo) => {
+  return combineReducers({
+    nav,
+    user: combineReducers({
+      email,
+      games
+    }),
+    fetching,
+    apollo
+  });
+}

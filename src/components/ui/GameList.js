@@ -26,11 +26,11 @@ export default class GameList extends Component {
 
       <ListView
         dataSource={this.state.dataSource}
-        renderRow={(rowData) =>
+        renderRow={(rowData, sectionId, rowId) =>
           <View style={styles.row}>
-            <Text>{rowData.id}</Text>
+            <Text>{parseInt(rowId) + 1}</Text>
             <Text>{rowData.won ? "Yes" : "No"}</Text>
-            <Text>{rowData.datePlayed}</Text>
+            <Text>{new Date(rowData.createdAt).toLocaleString()}</Text>
           </View>
         }
         renderHeader={() =>

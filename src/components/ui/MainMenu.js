@@ -33,7 +33,7 @@ export default class MainMenu extends Component {
         onChangeText={(password) => this.setState({password})}
         value={this.state.password}
       />
-      <Button title="Login" onPress={() => navigate("Profile", { name: 'Jane' }) } />
+      <Button title="Login" onPress={() => navigate("Profile", this.state) } />
       </View>
     );
   }

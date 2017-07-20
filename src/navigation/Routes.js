@@ -3,7 +3,7 @@ import Profile from '../components/containers/Profile';
 
 const Routes = {
   Home: { screen: MainMenu },
-  Profile: { screen: Profile}
+  Profile: { screen: Profile }
 };
 
 export default Routes;

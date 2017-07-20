@@ -1,8 +1,7 @@
-import React, { Component } from 'react';
-import { StackNavigator, addNavigationHelpers } from 'react-navigation';
-import { Provider, connect } from 'react-redux';
+import React from 'react';
+import { AsyncStorage } from 'react-native';
 import storeFactory from './redux/Store';
-import { ApolloClient, createNetworkInterface, ApolloProvider } from 'react-apollo';
+import { ApolloClient, createNetworkInterface, ApolloProvider, applyMiddleware } from 'react-apollo';
 import AppWithNavigationState from './navigation/AppNavigator';
 
 import initialState from './redux/InitialState';
@@ -11,8 +10,24 @@ const networkInterface = createNetworkInterface({
   uri: 'https://api.graph.cool/simple/v1/cj4op83dh2t0k014902sz6iaj'
 });
 
+networkInterface.use([{
+  applyMiddleware (req, next) {
+    if (!req.options.headers) {
+      req.options.headers = {}
+    }
+    AsyncStorage.getItem("token")
+    .then((value) => {
+      // We have data!!
+      console.log("header", value);
+
+      req.options.headers.authorization = `Bearer ${value}`
+      next()
+    });
+  },
+}])
+
 const client = new ApolloClient({
-  networkInterface: networkInterface
+  networkInterface
 });
 
 const store = storeFactory(initialState, client);

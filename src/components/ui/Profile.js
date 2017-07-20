@@ -4,11 +4,11 @@ import {
   Text,
   View,
   Button,
-  ActivityIndicator
+  ActivityIndicator,
+  AsyncStorage
 } from 'react-native';
 
 import GameList from './GameList';
-
 
 export default class Profile extends Component {
   constructor(props) {
@@ -17,6 +17,18 @@ export default class Profile extends Component {
   componentDidMount() {
 
   }
+
+  onLogout() {
+      const { login } = this.props;
+      const { goBack } = this.props.navigation;
+
+      AsyncStorage.removeItem("token")
+      .then((value) => {
+        console.log("logout", value);
+
+        goBack();
+      });
+}
 
   render() {
     const { data: { loading, error, todos } } = this.props;
@@ -36,13 +48,14 @@ export default class Profile extends Component {
       </Text>
     } else {
       // console.log("email", this.props.data);
-      let { games, email} = this.props.data.User;
+      let { games, email} = this.props.data.user;
       return (
         <View style={styles.container}>
           <Text style={styles.welcome}>
             {`${email}`}
           </Text>
           <Button title="Play Games" onPress={() => onNewGame("4", false, "2016-2-2")} />
+          <Button title="Logout" onPress={() => this.onLogout()} />
           <GameList
             games={games}
           />

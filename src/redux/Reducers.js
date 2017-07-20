@@ -50,6 +50,16 @@ export const fetching = (state = false, action) => {
   }
 }
 
+export const token = (state = "", action) => {
+  switch(action.type) {
+    case C.SET_TOKEN:
+      return action.payload;
+
+    default:
+      return state;
+  }
+}
+
 export default createReducer = (apollo) => {
   return combineReducers({
     nav,
@@ -58,6 +68,7 @@ export default createReducer = (apollo) => {
       games
     }),
     fetching,
+    token,
     apollo
   });
 }

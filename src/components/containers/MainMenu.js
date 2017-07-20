@@ -1,9 +1,9 @@
 import MainMenu from '../ui/MainMenu';
-import { connect } from 'react-redux';
+import { graphql } from 'react-apollo';
+import { signInUser } from '../../graphql/Mutations';
 
-const mapStateToProps = (state) => {
-  return {
-
-  }
-};
-export default connect(mapStateToProps)(MainMenu);
+export default NewEntryWithData = graphql(signInUser, {
+  props: ({ mutate }) => ({
+    login: (email, password) => mutate({ variables: { email, password } }),
+  }),
+})(MainMenu);

@@ -4,7 +4,8 @@ import {
   StyleSheet,
   Button,
   View,
-  TextInput
+  TextInput,
+  AsyncStorage
 } from 'react-native';
 
 
@@ -17,8 +18,28 @@ export default class MainMenu extends Component {
        password: ""
      };
   }
+
+  onLogin() {
+      const { login } = this.props;
+      const { navigate } = this.props.navigation;
+
+      login(this.state.email, this.state.password)
+      .then(result => {
+        let token = result.data.signinUser.token;
+        console.log("token", token);
+        AsyncStorage.setItem("token", token)
+        .then((value) => {
+          console.log(value);
+          navigate("Profile");
+        });
+
+      }).catch(error => {
+        console.log("error", error);
+      });
+  }
+
+
   render() {
-    const { navigate } = this.props.navigation;
     return (
       <View>
       <TextInput
@@ -33,7 +54,7 @@ export default class MainMenu extends Component {
         onChangeText={(password) => this.setState({password})}
         value={this.state.password}
       />
-      <Button title="Login" onPress={() => navigate("Profile", this.state) } />
+      <Button title="Login" onPress={() =>  this.onLogin()} />
       </View>
     );
   }

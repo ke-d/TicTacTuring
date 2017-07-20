@@ -10,7 +10,7 @@ const consoleMessages = store => next => action => {
 	result = next(action);
 
 	// console.log(`${JSON.stringify(store.getState())}`);
-
+	// console.log(store.getState().nav)
 	return result;
 
 }

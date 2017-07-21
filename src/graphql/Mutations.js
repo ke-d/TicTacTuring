@@ -7,3 +7,12 @@ export const signInUser = gql`
     }
   }
 `;
+
+export const createGame = gql`
+  mutation ($won: Boolean!, $id: ID!) {
+    createGame(won: $won userId: $id) {
+      createdAt
+      won
+    }
+  }
+`;

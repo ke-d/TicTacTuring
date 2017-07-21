@@ -54,7 +54,7 @@ export default class Profile extends Component {
           <Text style={styles.welcome}>
             {`${email}`}
           </Text>
-          <Button title="Play Games" onPress={() => onNewGame("4", false, "2016-2-2")} />
+          <Button title="Play Game" onPress={() => this.props.onNewGame(false)} />
           <Button title="Logout" onPress={() => this.onLogout()} />
           <GameList
             games={games}

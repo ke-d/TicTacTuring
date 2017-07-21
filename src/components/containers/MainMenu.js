@@ -24,5 +24,5 @@ export default graphql(signInUser, {
       .catch(error => console.log(error));
     }
 
-  }),
+  })
 })(MainMenu);

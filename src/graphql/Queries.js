@@ -13,3 +13,11 @@ export const getUserData = gql`
       }
   }
 `;
+
+export const userQuery = gql`
+  query {
+    user {
+      id
+    }
+  }
+`;

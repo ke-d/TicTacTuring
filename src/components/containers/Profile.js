@@ -12,9 +12,12 @@ export default ComponentWithMutations = compose(
       onNewGame: (won) => {
         let { id } = ownProps.data.user;
         console.log("id", id);
-        return mutate({ variables: { won, id } })
+        return mutate({
+          variables: { won, id }
+        })
         .then((result) => {
           console.log(result);
+          ownProps.data.refetch();
         })
         .catch(error => console.log(error));
       }

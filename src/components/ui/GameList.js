@@ -28,18 +28,24 @@ export default class GameList extends Component {
         dataSource={this.state.dataSource}
         renderRow={(rowData, sectionId, rowId) =>
           <View style={styles.row}>
-            <Text>{parseInt(rowId) + 1}</Text>
-            <Text>{rowData.won ? "Yes" : "No"}</Text>
-            <Text>{new Date(rowData.createdAt).toLocaleString()}</Text>
+            <View style={styles.column}>
+              <Text>{`Game ${parseInt(rowId) + 1}`}</Text>
+              <Text>{new Date(rowData.createdAt).toLocaleDateString()}</Text>
+            </View>
+            <Text>{`Win: ${rowData.won ? "Yes" : "No"}`}</Text>
           </View>
+
         }
-        renderHeader={() =>
-          <View style={styles.rowHeader}>
-            <Text>"Game Number"</Text>
-            <Text>"Game Won?"</Text>
-            <Text>"Date Played"</Text>
-          </View>
+        renderSeperator={(sectionID, rowID, adjacentRowHighlighted) =>
+            <View key={rowId} style={styles.separator}/>
         }
+        // renderSectionHeader={(sectionData, sectionId) =>
+        //   <View style={styles.rowHeader}>
+        //     <Text>Game Number</Text>
+        //     <Text>Game Won?</Text>
+        //     <Text>Date Played</Text>
+        //   </View>
+        // }
        />
       </View>
     );
@@ -47,16 +53,26 @@ export default class GameList extends Component {
 }
 
 const styles = StyleSheet.create({
-  rowHeader: {
+  column: {
     flex: 1,
+    flexDirection: 'column',
+    justifyContent: 'space-between',
+    width: 350
+  },
+  separator: {
+    flex: 1,
+    height: StyleSheet.hairlineWidth,
+    backgroundColor: '#8E8E8E',
+  },
+  row: {
+    flex: 1,
+    padding: 5,
     flexDirection: 'row',
     justifyContent: 'space-between',
     width: 350
   },
-  row: {
+  listView: {
     flex: 1,
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    width: 350
-  }
+    justifyContent: 'center',
+  },
 });

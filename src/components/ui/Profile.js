@@ -32,6 +32,7 @@ export default class Profile extends Component {
 
   render() {
     const { data: { loading, error, todos } } = this.props;
+    const { games, email} = this.props.data.user;
 
     if(loading) {
       return (
@@ -47,8 +48,6 @@ export default class Profile extends Component {
         {`An Error has occured`}
       </Text>
     } else {
-      // console.log("email", this.props.data);
-      let { games, email} = this.props.data.user;
       return (
         <View style={styles.container}>
           <Text style={styles.welcome}>

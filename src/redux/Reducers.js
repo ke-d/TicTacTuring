@@ -17,6 +17,8 @@ export const userInputs = (state = [], action) => {
       return [...state, action.payload];
 
     case C.RESET_GAME:
+      return [];
+      
     default:
       return state;
   }
@@ -28,6 +30,8 @@ export const aiInputs = (state = [], action) => {
       return [...state, action.payload];
 
     case C.RESET_GAME:
+      return [];
+
     default:
       return state;
   }
@@ -39,6 +43,8 @@ export const gameDone = (state = false, action) => {
       return action.payload;
 
     case C.RESET_GAME:
+      return false;
+
     default:
       return state;
   }
@@ -50,6 +56,8 @@ export const won = (state = false, action) => {
       return action.payload;
 
     case C.RESET_GAME:
+      return false;
+
     default:
       return state;
   }

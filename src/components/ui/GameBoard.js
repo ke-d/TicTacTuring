@@ -41,63 +41,92 @@ export const CONDITIONS = [
 export default class GameBoard extends Component {
   constructor(props) {
     super(props);
-    console.log(props);
+    // console.log(props);
   }
 
   boardClickHandler(e) {
     const { locationX, locationY } = e.nativeEvent;
-    const { userInputs, aiInputs, gameDone } = this.props;
     const { addUserInput } = this.props.gameActions;
+
+    const { userInputs, aiInputs, gameDone } = this.props;
+    const inputs = userInputs.concat(aiInputs);
+
+    if(gameDone) {
+      return;
+    }
+
+
+    const area = AREAS.find(d =>
+      (locationX >= d.startX && locationX <= d.endX) &&
+      (locationY >= d.startY && locationY <= d.endY));
+
+    console.log(locationX, locationY);
+    if(area === undefined) {
+      return;
+    }
+    console.log(area.id);
+
+    if (inputs.every(d => d !== area.id)) {
+      addUserInput(area.id);
+    }
+  }
+
+  componentWillReceiveProps(nextProps) {
+    // console.log("next", nextProps);
+    const { gameDone, userInputs, aiInputs} = nextProps;
+    const newGame = this.props.gameDone === true && gameDone === false;
+    if(this.props.userInputs.length !== userInputs.length && !gameDone && !newGame) {
+      this.judgeWinner(nextProps, "HUMAN");
+      this.AIAction(nextProps);
+    }
+
+    if(this.props.aiInputs.length !== aiInputs.length && !gameDone && !newGame) {
+      this.judgeWinner(nextProps, "AI");
+    }
+  }
+
+  isWinner(inputs: number[]) {
+    return CONDITIONS.some(d => d.every(item => inputs.indexOf(item) !== -1));
+  }
+
+  judgeWinner(nextProps, turn) {
+    let { userInputs, aiInputs, gameDone } = nextProps;
+    let { setWinner, setGameDone } = nextProps.gameActions;
 
     if(gameDone) {
       return;
     }
 
     const inputs = userInputs.concat(aiInputs);
-
-    const area = AREAS.find(d =>
-      (locationX >= d.startX && locationX <= d.endX) &&
-      (locationY >= d.startY && locationY <= d.endY));
+    let haveAWinner = this.isWinner(turn === "HUMAN" ? userInputs : aiInputs);
 
 
-    // console.log(area.id);
-    addUserInput(area.id);
-    this.judgeWinner()
-    this.AIAction()
-  }
-
-  isWinner(inputs: number[]) {
-    return CONDITIONS.some(d => d.every(item => inputs.indexOf(item) !== -1))
-  }
-
-  judgeWinner() {
-    const { userInputs, aiInputs, won } = this.props;
-    const inputs = userInputs.concat(aiInputs);
-    let res = this.isWinner(userInputs)
-    console.log(res);
-    if (inputs.length >= 5 ) {
-
+    if (inputs.length >= 5 && haveAWinner) {
+      console.log("result", `${turn}` );
+      setGameDone(true);
+      setWinner(turn === "HUMAN" ? true : false);
+    } else if (inputs.length === 9) {
+      console.log(`No winner on turn ${turn}`);
+      setGameDone(true);
+      setWinner(false);
     }
 
-    // if (inputs.length === 9 &&
-    //     result === GAME_RESULT_NO && result !== GAME_RESULT_TIE) {
-    //   this.setState({ result: GAME_RESULT_TIE })
-    // }
   }
 
-  AIAction() {
-    const { userInputs, aiInputs, gameDone } = this.props;
-    const { addAIInput } = this.props.gameActions;
+  AIAction(nextProps) {
+    const { userInputs, aiInputs, gameDone } = nextProps;
+    const { addAIInput } = nextProps.gameActions;
     const inputs = userInputs.concat(aiInputs);
     if (gameDone) {
       return;
     }
-    while(true) {
+    while(inputs.length < 9) {
 
-      const randomNumber = Math.round(Math.random() * 8.3)
+      const randomNumber = Math.round(Math.random() * 8.3);
+      // console.log("RN", randomNumber);
+      // console.log(inputs);
       if (inputs.every(d => d !== randomNumber)) {
         addAIInput(randomNumber);
-        this.judgeWinner();
         break;
       }
     }

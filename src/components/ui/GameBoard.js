@@ -45,8 +45,12 @@ export default class GameBoard extends Component {
   }
 
   boardClickHandler(e) {
-    const { locationX, locationY } = e.nativeEvent;
+    const { pageX, pageY } = e.nativeEvent;
     const { addUserInput } = this.props.gameActions;
+
+    //Offsets for the differences between the root element pageXY and locationXY
+    const offSetX = pageX - 50;
+    const offSetY = pageY - 50;
 
     const { userInputs, aiInputs, gameDone } = this.props;
     const inputs = userInputs.concat(aiInputs);
@@ -57,10 +61,10 @@ export default class GameBoard extends Component {
 
 
     const area = AREAS.find(d =>
-      (locationX >= d.startX && locationX <= d.endX) &&
-      (locationY >= d.startY && locationY <= d.endY));
+      (offSetX >= d.startX && offSetX <= d.endX) &&
+      (offSetY >= d.startY && offSetY <= d.endY));
 
-    console.log(locationX, locationY);
+
     if(area === undefined) {
       return;
     }
@@ -102,11 +106,11 @@ export default class GameBoard extends Component {
 
 
     if (inputs.length >= 5 && haveAWinner) {
-      console.log("result", `${turn}` );
+      // console.log("result", `${turn}` );
       setGameDone(true);
       setWinner(turn === "HUMAN" ? true : false);
     } else if (inputs.length === 9) {
-      console.log(`No winner on turn ${turn}`);
+      //console.log(`No winner on turn ${turn}`);
       setGameDone(true);
       setWinner(false);
     }
@@ -123,8 +127,7 @@ export default class GameBoard extends Component {
     while(inputs.length < 9) {
 
       const randomNumber = Math.round(Math.random() * 8.3);
-      // console.log("RN", randomNumber);
-      // console.log(inputs);
+
       if (inputs.every(d => d !== randomNumber)) {
         addAIInput(randomNumber);
         break;

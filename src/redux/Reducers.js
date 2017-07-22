@@ -11,50 +11,45 @@ export const nav = (state = initialHome, action) => {
   return nextState || state;
 };
 
-export const email = (state = "", action) => {
+export const userInputs = (state = [], action) => {
   switch(action.type) {
-    case C.SET_EMAIL:
-      return action.payload;
-
-    default:
-      return state;
-  }
-}
-
-export const games = (state = [], action) => {
-  switch(action.type) {
-    case C.SET_GAMES:
-      return action.payload;
-
-    case C.ADD_GAME:
+    case C.ADD_USER_INPUT:
       return [...state, action.payload];
 
+    case C.RESET_GAME:
     default:
       return state;
   }
 }
 
-export const fetching = (state = false, action) => {
+export const aiInputs = (state = [], action) => {
   switch(action.type) {
-    case C.SET_GAMES:
-      return false;
+    case C.ADD_AI_INPUT:
+      return [...state, action.payload];
 
-    case C.SET_EMAIL:
-      return false;
-
-    case C.FETCH_USER:
-      return true;
-
+    case C.RESET_GAME:
     default:
       return state;
   }
 }
 
-export const token = (state = "", action) => {
+export const gameDone = (state = false, action) => {
   switch(action.type) {
-    case C.SET_TOKEN:
+    case C.SET_GAME_DONE:
       return action.payload;
 
+    case C.RESET_GAME:
+    default:
+      return state;
+  }
+}
+
+export const won = (state = false, action) => {
+  switch(action.type) {
+    case C.SET_WINNER:
+      return action.payload;
+
+    case C.RESET_GAME:
     default:
       return state;
   }
@@ -63,12 +58,12 @@ export const token = (state = "", action) => {
 export default createReducer = (apollo) => {
   return combineReducers({
     nav,
-    user: combineReducers({
-      email,
-      games
+    game: combineReducers({
+      userInputs,
+      aiInputs,
+      gameDone,
+      won
     }),
-    fetching,
-    token,
     apollo
   });
 }

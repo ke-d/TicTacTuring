@@ -32,7 +32,6 @@ export default class Profile extends Component {
 
   render() {
     const { data: { loading, error, todos } } = this.props;
-    const { games, email} = this.props.data.user;
 
     if(loading) {
       return (
@@ -48,12 +47,14 @@ export default class Profile extends Component {
         {`An Error has occured`}
       </Text>
     } else {
+
+      const { games, email} = this.props.data.user;
       return (
         <View style={styles.container}>
           <Text style={styles.welcome}>
             {`${email}`}
           </Text>
-          <Button title="Play Game" onPress={() => this.props.onNewGame(false)} />
+          <Button title="Play Game" onPress={() => this.props.navigation.navigate("TicTacTuring")} />
           <Button title="Logout" onPress={() => this.onLogout()} />
           <GameList
             games={games}

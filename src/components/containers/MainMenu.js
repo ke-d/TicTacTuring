@@ -9,6 +9,7 @@ export default graphql(signInUser, {
   props: ({ mutate, ownProps }) => ({
 
     onLogin: (email, password) => {
+      console.log(ownProps);
       return mutate({ variables: { email, password } })
       .then((result) => {
         let token = result.data.signinUser.token;
@@ -20,8 +21,7 @@ export default graphql(signInUser, {
       .then(() => {
         let { navigate } = ownProps.navigation;
         return navigate("Profile");
-      })
-      .catch(error => console.log(error));
+      });
     }
 
   })

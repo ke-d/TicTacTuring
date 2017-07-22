@@ -41,7 +41,7 @@ export const CONDITIONS = [
 export default class GameBoard extends Component {
   constructor(props) {
     super(props);
-    // console.log(props);
+    console.log(props);
   }
 
   boardClickHandler(e) {
@@ -76,9 +76,15 @@ export default class GameBoard extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    // console.log("next", nextProps);
-    const { gameDone, userInputs, aiInputs} = nextProps;
+    console.log("next", nextProps);
+    const { gameDone, userInputs, aiInputs, won, submitGame} = nextProps;
     const newGame = this.props.gameDone === true && gameDone === false;
+    const gameOver = this.props.gameDone === false && gameDone === true;
+
+    if(gameOver) {
+      submitGame(won);
+    }
+
     if(this.props.userInputs.length !== userInputs.length && !gameDone && !newGame) {
       this.judgeWinner(nextProps, "HUMAN");
       this.AIAction(nextProps);

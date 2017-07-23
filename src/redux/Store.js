@@ -1,6 +1,7 @@
 import C from './Constants';
 import createReducer from './Reducers';
 import { createStore, applyMiddleware, combineReducers } from 'redux';
+import thunk from 'redux-thunk';
 const consoleMessages = store => next => action => {
 
 	let result;
@@ -22,6 +23,6 @@ export default (initialState = {}, client) => {
 	return createStore(
 		rootReducer,
 		initialState,
-		applyMiddleware(...[consoleMessages, client.middleware()])
+		applyMiddleware(thunk, consoleMessages, client.middleware())
 	);
 }

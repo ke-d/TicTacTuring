@@ -1,4 +1,5 @@
 import C from './Constants';
+import { AsyncStorage } from 'react-native';
 
 export const addUserInput = (input) => ({
   type: C.ADD_USER_INPUT,
@@ -23,3 +24,15 @@ export const setWinner = (won) => ({
 export const resetGame = () => ({
   type: C.RESET_GAME
 });
+
+export const login = (token) => (dispatch, getState) => {
+  AsyncStorage.setItem("token", token);
+}
+
+export const logout = () => (dispatch, getState) => {
+  AsyncStorage.removeItem("token")
+  .then((value) => {
+    console.log("logout", value);
+
+  });
+}

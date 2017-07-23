@@ -4,8 +4,7 @@ import {
   Text,
   View,
   Button,
-  ActivityIndicator,
-  AsyncStorage
+  ActivityIndicator
 } from 'react-native';
 
 import GameList from './GameList';
@@ -14,21 +13,15 @@ export default class Profile extends Component {
   constructor(props) {
     super(props);
   }
-  componentDidMount() {
 
+  componentWillReceiveProps(nextProps) {
+    const { navIndex } = nextProps;
+    const thisComponentIndex = 1;
+    if(this.props.navIndex > navIndex && navIndex === thisComponentIndex) {
+      nextProps.data.refetch();
+      console.log("back to Profile");
+    }
   }
-
-  onLogout() {
-      const { login } = this.props;
-      const { goBack } = this.props.navigation;
-
-      AsyncStorage.removeItem("token")
-      .then((value) => {
-        console.log("logout", value);
-
-        goBack();
-      });
-}
 
   render() {
     const { data: { loading, error, todos } } = this.props;
@@ -55,7 +48,6 @@ export default class Profile extends Component {
             {`${email}`}
           </Text>
           <Button title="Play Game" onPress={() => this.props.navigation.navigate("TicTacTuring")} />
-          <Button title="Logout" onPress={() => this.onLogout()} />
           <GameList
             games={games}
           />

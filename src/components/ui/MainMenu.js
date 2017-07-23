@@ -5,7 +5,8 @@ import {
   View,
   TextInput,
   Alert,
-  ActivityIndicator
+  ActivityIndicator,
+  AsyncStorage
 } from 'react-native';
 
 
@@ -14,10 +15,49 @@ export default class MainMenu extends Component {
   constructor(props) {
     super(props);
     this.state = {
-       email: "",
-       password: "",
+       email: "user@email.com",
+       password: "secret-password",
        fetching: false
      };
+  }
+
+  login(email, password) {
+    this.state.fetching = true;
+    this.props.onLogin(email, password)
+    .then((result) => {
+      let token = result.data.signinUser.token;
+      this.state.fetching = false
+      return token;
+    })
+    .then(token => AsyncStorage.setItem("token", token))
+    .then(() => {
+      let { navigate } = this.props.navigation;
+      return navigate("Profile");
+    })
+    .catch(error => {
+      this.state.fetching = false;
+      console.log(error);
+      Alert.alert("An Error Has Occured", error.message);
+    });
+  }
+
+  logout() {
+      const { login } = this.props;
+
+      AsyncStorage.removeItem("token")
+      .then((value) => {
+        console.log("logout", value);
+
+      });
+  }
+
+  componentWillReceiveProps(nextProps) {
+    const { navIndex } = nextProps;
+    const thisComponentIndex = 0;
+    if(this.props.navIndex > navIndex && navIndex === thisComponentIndex) {
+      console.log("back to MainMenu");
+      this.logout();
+    }
   }
 
   render() {
@@ -44,17 +84,7 @@ export default class MainMenu extends Component {
         <Button
           style={styles.button}
           title="Login"
-          onPress={() => {
-          this.state.fetching = true;
-          console.log(this.state);
-          return this.props.onLogin(this.state.email, this.state.password)
-          .then(result => this.state.fetching = false)
-          .catch(error => {
-            this.state.fetching = false;
-            console.log(error);
-            Alert.alert("An Error Has Occured", error.message);
-          });
-        }}
+          onPress={() => this.login(this.state.email, this.state.password)}
         />
 
         <ActivityIndicator

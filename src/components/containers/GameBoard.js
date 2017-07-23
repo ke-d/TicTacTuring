@@ -19,10 +19,6 @@ const ComponentWithMutations = compose(
         return mutate({
           variables: { won, id }
         })
-        .then((result) => {
-          console.log(result);
-          ownProps.data.refetch();
-        })
         .catch(error => console.log(error));
       }
 
@@ -36,7 +32,8 @@ const mapStateToProps = (state) => {
     userInputs,
     aiInputs,
     gameDone,
-    won
+    won,
+    navIndex: state.nav.index
   };
 };
 

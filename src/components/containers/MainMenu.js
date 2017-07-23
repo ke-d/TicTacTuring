@@ -5,24 +5,19 @@ import { setToken } from '../../redux/Actions';
 import { connect } from 'react-redux';
 import { AsyncStorage } from 'react-native';
 
-export default graphql(signInUser, {
+const ComponentWithMutations = graphql(signInUser, {
   props: ({ mutate, ownProps }) => ({
-
     onLogin: (email, password) => {
-      console.log(ownProps);
-      return mutate({ variables: { email, password } })
-      .then((result) => {
-        let token = result.data.signinUser.token;
-        let { dispatch } = ownProps;
-
-        return token;
-      })
-      .then(token => AsyncStorage.setItem("token", token))
-      .then(() => {
-        let { navigate } = ownProps.navigation;
-        return navigate("Profile");
-      });
+      return mutate({ variables: { email, password } });
     }
 
   })
 })(MainMenu);
+
+const mapStateToProps = (state) => {
+  return {
+    navIndex: state.nav.index
+  }
+};
+
+export default connect(mapStateToProps)(ComponentWithMutations);

@@ -41,7 +41,7 @@ export const CONDITIONS = [
 export default class GameBoard extends Component {
   constructor(props) {
     super(props);
-    console.log(props);
+    //props.gameActions.resetGame();
   }
 
   boardClickHandler(e) {
@@ -76,8 +76,8 @@ export default class GameBoard extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    console.log("next", nextProps);
-    const { gameDone, userInputs, aiInputs, won, submitGame} = nextProps;
+    // console.log("next", nextProps);
+    const { gameDone, userInputs, aiInputs, won, submitGame, navIndex } = nextProps;
     const newGame = this.props.gameDone === true && gameDone === false;
     const gameOver = this.props.gameDone === false && gameDone === true;
 
@@ -85,12 +85,16 @@ export default class GameBoard extends Component {
       submitGame(won);
     }
 
-    if(this.props.userInputs.length !== userInputs.length && !gameDone && !newGame) {
+    if(this.props.navIndex > navIndex) {
+      nextProps.gameActions.resetGame();
+    }
+
+    if(this.props.userInputs.length < userInputs.length && !gameDone && !newGame) {
       this.judgeWinner(nextProps, "HUMAN");
       this.AIAction(nextProps);
     }
 
-    if(this.props.aiInputs.length !== aiInputs.length && !gameDone && !newGame) {
+    if(this.props.aiInputs.length < aiInputs.length && !gameDone && !newGame) {
       this.judgeWinner(nextProps, "AI");
     }
   }

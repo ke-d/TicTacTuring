@@ -11,7 +11,7 @@ const consoleMessages = store => next => action => {
 	result = next(action);
 
 	// console.log(`${JSON.stringify(store.getState())}`);
-	// console.log(store.getState().game);
+	// console.log(store.getState().token);
 	return result;
 
 }

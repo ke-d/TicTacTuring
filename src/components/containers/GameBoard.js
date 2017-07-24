@@ -13,9 +13,7 @@ const ComponentWithMutations = compose(
     props: ({ mutate, ownProps }) => ({
 
       submitGame: (won) => {
-        console.log(ownProps);
         let { id } = ownProps.data.user;
-        console.log("id", id);
         return mutate({
           variables: { won, id }
         })

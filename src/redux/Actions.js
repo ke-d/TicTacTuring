@@ -1,5 +1,4 @@
 import C from './Constants';
-import { AsyncStorage } from 'react-native';
 
 export const AREAS = [
   { startX: 3, startY: 3, endX : 103, endY: 103, id: 0 },
@@ -88,7 +87,6 @@ export const onUserAction = (e) => (dispatch, getState) => {
 
 const judgeWinner = (turn) => (dispatch, getState) => {
   let { userInputs, aiInputs, gameDone } = getState().game;
-  console.log(getState().client);
   if(gameDone) {
     return;
   }
@@ -145,13 +143,14 @@ const isWinner = (inputs: number[]) => {
 
 
 export const login = (token) => (dispatch, getState) => {
-  AsyncStorage.setItem("token", token);
+  dispatch({
+    type: C.SET_TOKEN,
+    payload: token
+  })
 };
 
 export const logout = () => (dispatch, getState) => {
-  AsyncStorage.removeItem("token")
-  .then((value) => {
-    console.log("logout", value);
-
-  });
+  dispatch({
+      type: C.CLEAR_TOKEN
+  })
 };

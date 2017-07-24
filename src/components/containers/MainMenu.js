@@ -1,27 +1,27 @@
 import MainMenu from '../ui/MainMenu';
-import { graphql } from 'react-apollo';
+import { graphql, withApollo } from 'react-apollo';
 import { signInUser } from '../../graphql/Mutations';
 import { login, logout } from '../../redux/Actions';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-const ComponentWithMutations = graphql(signInUser, {
+const ComponentWithMutations = withApollo(graphql(signInUser, {
   props: ({ mutate, ownProps }) => ({
     onLogin: (email, password) => {
-      console.log(ownProps);
       return mutate({ variables: { email, password } })
       .then((result) => {
-        let token = result.data.signinUser.token;
+        const token = result.data.signinUser.token;
         return token;
       })
       .then(token => ownProps.login(token))
       .then(() => {
-        let { navigate } = ownProps.navigation;
+        const { navigate } = ownProps.navigation;
+        ownProps.client.resetStore();
         return navigate("Profile");
       });
     }
 
   })
-})(MainMenu);
+})(MainMenu));
 
 const mapStateToProps = (state) => {
   return {

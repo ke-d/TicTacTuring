@@ -15,14 +15,9 @@ networkInterface.use([{
     if (!req.options.headers) {
       req.options.headers = {}
     }
-    AsyncStorage.getItem("token")
-    .then((value) => {
-      // We have data!!
-      console.log("header", value);
-
-      req.options.headers.authorization = `Bearer ${value}`
-      next()
-    });
+    const token = store.getState().token
+    req.options.headers.authorization = `Bearer ${token}`
+    next()
   },
 }])
 

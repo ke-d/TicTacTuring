@@ -18,7 +18,7 @@ export const userInputs = (state = [], action) => {
 
     case C.RESET_GAME:
       return [];
-      
+
     default:
       return state;
   }
@@ -63,6 +63,19 @@ export const won = (state = false, action) => {
   }
 }
 
+export const token = (state = "", action) => {
+  switch(action.type) {
+    case C.SET_TOKEN:
+      return action.payload;
+
+    case C.CLEAR_TOKEN:
+      return "";
+
+    default:
+      return state;
+  }
+}
+
 export default createReducer = (apollo) => {
   return combineReducers({
     nav,
@@ -72,6 +85,7 @@ export default createReducer = (apollo) => {
       gameDone,
       won
     }),
+    token,
     apollo
   });
 }

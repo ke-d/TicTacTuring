@@ -22,10 +22,11 @@ export default class MainMenu extends Component {
 
 
   componentWillReceiveProps(nextProps) {
-    const { navIndex, logout } = nextProps;
+    const { navIndex, logout, client } = nextProps;
     const thisComponentIndex = 0;
     if(this.props.navIndex > navIndex && navIndex === thisComponentIndex) {
       console.log("back to MainMenu");
+      client.resetStore();
       logout();
     }
   }

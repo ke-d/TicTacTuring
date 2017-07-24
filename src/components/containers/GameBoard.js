@@ -1,5 +1,5 @@
 import GameBoard from '../ui/GameBoard';
-import { onUserAction } from '../../redux/Actions';
+import { onUserAction, resetGame } from '../../redux/Actions';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
@@ -39,7 +39,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch, ownProps) => {
   return {
-    onUserAction: bindActionCreators(onUserAction, dispatch)
+    onUserAction: bindActionCreators(onUserAction, dispatch),
+    resetGame: bindActionCreators(resetGame, dispatch)
   }
 };
 

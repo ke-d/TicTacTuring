@@ -24,9 +24,14 @@ export default class GameBoard extends Component {
 
 
   componentWillReceiveProps(nextProps) {
-    const { navIndex } = nextProps;
+    const { navIndex, resetGame, submitGame, gameDone, won } = nextProps;
+    const gameOver = this.props.gameDone === false && gameDone === true;
+
+    if(gameOver) {
+      submitGame(won);
+    }
     if(this.props.navIndex > navIndex) {
-      nextProps.gameActions.resetGame();
+      resetGame();
     }
 
   }

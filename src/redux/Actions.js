@@ -88,7 +88,7 @@ export const onUserAction = (e) => (dispatch, getState) => {
 
 const judgeWinner = (turn) => (dispatch, getState) => {
   let { userInputs, aiInputs, gameDone } = getState().game;
-
+  console.log(getState().client);
   if(gameDone) {
     return;
   }

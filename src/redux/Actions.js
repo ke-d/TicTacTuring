@@ -78,19 +78,17 @@ export const onUserAction = (e) => (dispatch, getState) => {
       addUserInput(area.id)
     );
     dispatch(
-      judgeWinner(getState().game, "HUMAN", dispatch)
+      judgeWinner("HUMAN")
     );
     dispatch(
-      AIAction(getState().game, dispatch)
+      AIAction()
     );
   }
 }
 
-const judgeWinner = (gameState, turn, dispatch) => (dispatch, getState) => {
-  let { userInputs, aiInputs, gameDone } = gameState;
+const judgeWinner = (turn) => (dispatch, getState) => {
+  let { userInputs, aiInputs, gameDone } = getState().game;
 
-  console.log(gameState);
-  console.log(getState().game);
   if(gameDone) {
     return;
   }
@@ -119,8 +117,8 @@ const judgeWinner = (gameState, turn, dispatch) => (dispatch, getState) => {
 
 }
 
-const AIAction = (gameState, dispatch) => (dispatch, getState) => {
-  const { userInputs, aiInputs, gameDone } = gameState;
+const AIAction = () => (dispatch, getState) => {
+  const { userInputs, aiInputs, gameDone } = getState().game;
   const inputs = userInputs.concat(aiInputs);
   if (gameDone) {
     return;
@@ -134,7 +132,7 @@ const AIAction = (gameState, dispatch) => (dispatch, getState) => {
         addAIInput(randomNumber)
       );
       dispatch(
-        judgeWinner(getState().game, "AI", dispatch)
+        judgeWinner("AI")
       );
       break;
     }

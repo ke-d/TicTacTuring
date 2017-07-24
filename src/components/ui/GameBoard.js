@@ -17,37 +17,18 @@ export const CENTER_POINTS = [
 
 
 export default class GameBoard extends Component {
+
   constructor(props) {
     super(props);
-    //props.gameActions.resetGame();
   }
 
-  boardClickHandler(e) {
-
-  }
 
   componentWillReceiveProps(nextProps) {
-    // console.log("next", nextProps);
-    const { gameDone, userInputs, aiInputs, won, submitGame, navIndex } = nextProps;
+    const { navIndex } = nextProps;
     if(this.props.navIndex > navIndex) {
       nextProps.gameActions.resetGame();
     }
-    // const newGame = this.props.gameDone === true && gameDone === false;
-    // const gameOver = this.props.gameDone === false && gameDone === true;
-    //
-    // if(gameOver) {
-    //   submitGame(won);
-    // }
-    //
-    //
-    // if(this.props.userInputs.length < userInputs.length && !gameDone && !newGame) {
-    //   this.judgeWinner(nextProps, "HUMAN");
-    //   this.AIAction(nextProps);
-    // }
-    //
-    // if(this.props.aiInputs.length < aiInputs.length && !gameDone && !newGame) {
-    //   this.judgeWinner(nextProps, "AI");
-    // }
+
   }
 
   render() {

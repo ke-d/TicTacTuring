@@ -15,16 +15,18 @@ export default class Profile extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
+    // console.log("new Props", nextProps);
     const { navIndex } = nextProps;
     const thisComponentIndex = 1;
     if(this.props.navIndex > navIndex && navIndex === thisComponentIndex) {
-      nextProps.data.refetch();
+      nextProps.refetch();
       console.log("back to Profile");
     }
   }
 
   render() {
-    const { data: { loading, error, todos } } = this.props;
+    const { loading, error } = this.props;
+    console.log(loading);
 
     if(loading) {
       return (
@@ -41,7 +43,7 @@ export default class Profile extends Component {
       </Text>
     } else {
 
-      const { games, email} = this.props.data.user;
+      const { games, email, loadNextPage } = this.props;
       return (
         <View style={styles.container}>
           <Text style={styles.welcome}>
@@ -49,6 +51,7 @@ export default class Profile extends Component {
           </Text>
           <Button title="Play Game" onPress={() => this.props.navigation.navigate("TicTacTuring")} />
           <GameList
+            loadNextPage={() => loadNextPage()}
             games={games}
           />
 

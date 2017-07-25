@@ -1,7 +1,21 @@
 import { gql } from 'react-apollo';
 
 export const getUserData = gql`
-  query {
+  query ($first: Int!, $skip: Int!) {
+      user {
+        id
+        email
+        games (first: $first, skip: $skip) {
+  				id
+          won
+          createdAt
+        }
+      }
+  }
+`;
+
+export const getUserDataNoPage = gql`
+  query  {
       user {
         id
         email

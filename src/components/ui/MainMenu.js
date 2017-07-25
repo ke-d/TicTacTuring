@@ -56,7 +56,6 @@ export default class MainMenu extends Component {
           style={styles.button}
           title="Login"
           onPress={() => {
-            this.state.fetching = true;
             return this.props.onLogin(this.state.email, this.state.password)
             .then(() => this.state.fetching = false)
             .catch(error => Alert.alert("An Error Has Occured", error.message));

@@ -19,14 +19,14 @@ export default class GameList extends Component {
           }}
           keyExtractor={(item, index) => index}
           onEndReached={({distanceFromEnd}) => {
-            console.log(distanceFromEnd);
+            // console.log(distanceFromEnd);
             const absDistance = Math.abs(distanceFromEnd);
-            // console.log(this.props.loadNextPage);
-            // const { loadNextPage } = this.props.onPageLoad;
             if(absDistance >= 0 && absDistance < 10) {
-              // this.props.loadNextPage();
+              this.props.loadNextPage();
             }
           }}
+          onRefresh={() => this.props.loadNextPage()}
+          refreshing={false}
           onEndReachedThreshold={.005}
         />
     );

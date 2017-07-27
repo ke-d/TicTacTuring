@@ -15,18 +15,34 @@ export default class Profile extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    // console.log("new Props", nextProps);
-    const { navIndex } = nextProps;
+    const { navIndex, initialGames, onNewGames, games, email } = nextProps;
+    console.log("new Props", initialGames.length, games.length);
     const thisComponentIndex = 1;
     if(this.props.navIndex > navIndex && navIndex === thisComponentIndex) {
-      nextProps.refetch();
       console.log("back to Profile");
+    }
+    if(games.length === 0 && initialGames.length !== 0) {
+      onNewGames(initialGames);
     }
   }
 
+  // Store the user's games in a redux store as a workaround to https://github.com/apollographql/react-apollo/issues/549
+  loadNextPage() {
+    return this.props.fetchMore({
+      variables: {
+        first: 10,
+        skip: this.props.games.length
+      },
+      updateQuery: (previousResult, { fetchMoreResult }) => {}
+    })
+    .then((result) => {
+      this.props.onNewGames(result.data.user.games);
+    });
+  }
+
+
   render() {
     const { loading, error } = this.props;
-    console.log(loading);
 
     if(loading) {
       return (
@@ -51,7 +67,7 @@ export default class Profile extends Component {
           </Text>
           <Button title="Play Game" onPress={() => this.props.navigation.navigate("TicTacTuring")} />
           <GameList
-            loadNextPage={() => loadNextPage()}
+            loadNextPage={() => this.loadNextPage()}
             games={games}
           />
 

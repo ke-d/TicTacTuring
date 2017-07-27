@@ -76,6 +76,19 @@ export const token = (state = "", action) => {
   }
 }
 
+export const userGames = (state = [], action) => {
+  switch(action.type) {
+    case C.ADD_USER_GAMES:
+      return [...state, ...action.payload];
+
+    case C.SET_USER_GAMES:
+      return action.payload;
+
+    default:
+      return state;
+  }
+}
+
 export default createReducer = (apollo) => {
   return combineReducers({
     nav,
@@ -86,6 +99,7 @@ export default createReducer = (apollo) => {
       won
     }),
     token,
+    userGames,
     apollo
   });
 }

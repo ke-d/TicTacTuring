@@ -24,6 +24,11 @@ export const CONDITIONS = [
 ]
 
 
+export const addUserGames = (input) => ({
+  type: C.ADD_USER_GAMES,
+  payload: input
+});
+
 export const addUserInput = (input) => ({
   type: C.ADD_USER_INPUT,
   payload: input
@@ -142,15 +147,24 @@ const isWinner = (inputs: number[]) => {
 }
 
 
+
 export const login = (token) => (dispatch, getState) => {
   dispatch({
     type: C.SET_TOKEN,
     payload: token
-  })
+  });
+  dispatch({
+    type: C.SET_USER_GAMES,
+    payload: []
+  });
 };
 
 export const logout = () => (dispatch, getState) => {
   dispatch({
       type: C.CLEAR_TOKEN
-  })
+  });
+  dispatch({
+    type: C.SET_USER_GAMES,
+    payload: []
+  });
 };

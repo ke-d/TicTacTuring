@@ -16,6 +16,7 @@ networkInterface.use([{
       req.options.headers = {}
     }
     const token = store.getState().token
+    // console.log(token)
     req.options.headers.authorization = `Bearer ${token}`
     next()
   },

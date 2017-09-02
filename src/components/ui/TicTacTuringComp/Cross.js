@@ -4,6 +4,7 @@ import {
   View
 } from 'react-native';
 
+// A 'Cross' for the TicTacToe Game
 export default Cross = ({xTranslate = 0, yTranslate = 0, color}) => {
   return (
     <View style={[styles.container, {

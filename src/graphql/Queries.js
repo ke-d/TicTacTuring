@@ -1,5 +1,6 @@
 import { gql } from 'react-apollo';
 
+// A Profile page query that supports pagination
 export const getUserData = gql`
   query ($first: Int!, $skip: Int!) {
       user {
@@ -14,6 +15,7 @@ export const getUserData = gql`
   }
 `;
 
+// A Profile page query without pagination
 export const getUserDataNoPage = gql`
   query  {
       user {
@@ -28,6 +30,7 @@ export const getUserDataNoPage = gql`
   }
 `;
 
+// See if the user is still logged in query
 export const userQuery = gql`
   query {
     user {

@@ -9,6 +9,7 @@ import {
 
 import GameList from './GameList';
 
+// The Profile page for a user showing the history of all their games
 export default class Profile extends Component {
   constructor(props) {
     super(props);

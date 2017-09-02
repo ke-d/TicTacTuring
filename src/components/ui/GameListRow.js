@@ -1,6 +1,7 @@
 import React from 'react';
 import { Text, View, StyleSheet } from 'react-native';
 
+// Creates the individual row of the game list
 export default GameListRow = ({item, index}) => {
   const date = new Date(item.createdAt);
   const paddedSeconds = date.getSeconds() < 10 ? `0${date.getSeconds()}` : date.getSeconds();

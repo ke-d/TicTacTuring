@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 import { addUserGames } from '../../redux/Actions';
 import { bindActionCreators } from 'redux';
 
-
+// Map the state from redux state to props
 const mapStateToProps = (state) => {
   return {
     navIndex: state.nav.index,
@@ -14,6 +14,7 @@ const mapStateToProps = (state) => {
   }
 };
 
+// Map the redux actions to props
 const mapDispatchToProps = (dispatch) => {
   return {
     onNewGames: bindActionCreators(addUserGames, dispatch)
@@ -22,6 +23,7 @@ const mapDispatchToProps = (dispatch) => {
 
 const ComponentData = connect(mapStateToProps, mapDispatchToProps)(Profile);
 
+// Creates the pagination in the game list
 const ComponentWithMutations = compose(
   graphql(getUserData, {
     options: () => ({
@@ -56,6 +58,7 @@ const ComponentWithMutations = compose(
                 if (!fetchMoreResult) {
                   return previousResult;
                 }
+                // Create a newGames array that appends the old games and the new games
                 const newGames = [...previousResult.user.games, ...fetchMoreResult.user.games];
                 console.log("new Size", newGames.length);
                 return Object.assign({}, previousResult, {

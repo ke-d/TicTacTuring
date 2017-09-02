@@ -7,6 +7,8 @@ import { compose, graphql } from 'react-apollo';
 import { userQuery } from '../../graphql/Queries';
 import { createGame } from '../../graphql/Mutations';
 
+// Map the createGame mutation for the game board
+
 const ComponentWithMutations = compose(
   graphql(userQuery, { options: {fetchPolicy: 'network-only' }}),
   graphql(createGame, {
@@ -24,6 +26,7 @@ const ComponentWithMutations = compose(
   })
 )(GameBoard);
 
+// Map the redux state that contains all the variables of the game
 const mapStateToProps = (state) => {
   const { userInputs, aiInputs, gameDone, won } = state.game;
   return {
@@ -35,6 +38,7 @@ const mapStateToProps = (state) => {
   };
 };
 
+// Map the redux actions to props
 const mapDispatchToProps = (dispatch, ownProps) => {
   return {
     onUserAction: bindActionCreators(onUserAction, dispatch),

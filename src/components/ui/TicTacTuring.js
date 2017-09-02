@@ -8,7 +8,7 @@ import {
 } from 'react-native';
 import GameBoard from '../containers/GameBoard';
 
-
+// The container for the gameboard
 export default TicTacTuring = ({gameDone, won, onResetGame}) => {
   let textWinner = won ? "YOU WIN!" : "YOU LOSE!";
 

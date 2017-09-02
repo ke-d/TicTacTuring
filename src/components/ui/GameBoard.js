@@ -3,6 +3,7 @@ import { StyleSheet, View, TouchableWithoutFeedback } from 'react-native';
 import Cross from './TicTacTuringComp/Cross';
 import Circle from './TicTacTuringComp/Circle';
 
+// The center points of each 'square' box on the game board
 export const CENTER_POINTS = [
   { x: 10, y:10 },
   { x: 113, y:10 },
@@ -13,7 +14,7 @@ export const CENTER_POINTS = [
   { x: 10, y:213 },
   { x: 113, y:213 },
   { x: 213, y:213 },
-]
+];
 
 
 export default class GameBoard extends Component {
@@ -22,7 +23,7 @@ export default class GameBoard extends Component {
     super(props);
   }
 
-
+  // Redux store controls the state of the game and will get passed into this UI
   componentWillReceiveProps(nextProps) {
     const { navIndex, resetGame, submitGame, gameDone, won } = nextProps;
     const gameOver = this.props.gameDone === false && gameDone === true;
@@ -69,6 +70,7 @@ export default class GameBoard extends Component {
           }]} />
 
           {
+            // Automatically map the correct amount of Circles to each point on screen
             userInputs.map((d, i) => (
               <Circle
                 key={i}
@@ -79,6 +81,7 @@ export default class GameBoard extends Component {
             ))
           }
           {
+            // Automatically map the correct amount of Crosses to each point on screen
             aiInputs.map((d, i) => (
               <Cross
                 key={i}

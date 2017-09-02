@@ -11,6 +11,7 @@ export const nav = (state = initialHome, action) => {
   return nextState || state;
 };
 
+// Reducers for the game state
 export const userInputs = (state = [], action) => {
   switch(action.type) {
     case C.ADD_USER_INPUT:

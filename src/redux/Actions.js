@@ -1,5 +1,6 @@
 import C from './Constants';
 
+// The areas of the game board
 export const AREAS = [
   { startX: 3, startY: 3, endX : 103, endY: 103, id: 0 },
   { startX: 106, startY: 3, endX : 206, endY: 103, id: 1 },
@@ -10,8 +11,9 @@ export const AREAS = [
   { startX: 3, startY: 209, endX : 103, endY: 309, id: 6 },
   { startX: 106, startY: 209, endX : 206, endY: 309, id: 7 },
   { startX: 209, startY: 209, endX : 309, endY: 309, id: 8 },
-]
+];
 
+// The conditions to win TicTacToe
 export const CONDITIONS = [
   [0, 1, 2],
   [3, 4, 5],
@@ -21,9 +23,9 @@ export const CONDITIONS = [
   [2, 5, 8],
   [0, 4, 8],
   [2, 4, 6],
-]
+];
 
-
+// Boilerplate action creators
 export const addUserGames = (input) => ({
   type: C.ADD_USER_GAMES,
   payload: input
@@ -53,6 +55,7 @@ export const resetGame = () => ({
   type: C.RESET_GAME
 });
 
+// onUserAction is called when the user clicks on a game board
 export const onUserAction = (e) => (dispatch, getState) => {
   const { pageX, pageY } = e.nativeEvent;
 
@@ -90,6 +93,7 @@ export const onUserAction = (e) => (dispatch, getState) => {
   }
 }
 
+// See who wins
 const judgeWinner = (turn) => (dispatch, getState) => {
   let { userInputs, aiInputs, gameDone } = getState().game;
   if(gameDone) {
@@ -120,6 +124,7 @@ const judgeWinner = (turn) => (dispatch, getState) => {
 
 }
 
+// The AI takes a turn
 const AIAction = () => (dispatch, getState) => {
   const { userInputs, aiInputs, gameDone } = getState().game;
   const inputs = userInputs.concat(aiInputs);
@@ -142,12 +147,13 @@ const AIAction = () => (dispatch, getState) => {
   }
 }
 
+// Checks to see if there is a winner via the conditions
 const isWinner = (inputs: number[]) => {
   return CONDITIONS.some(d => d.every(item => inputs.indexOf(item) !== -1));
 }
 
 
-
+// login action creator
 export const login = (token) => (dispatch, getState) => {
   dispatch({
     type: C.SET_TOKEN,
@@ -159,6 +165,7 @@ export const login = (token) => (dispatch, getState) => {
   });
 };
 
+// logout action creator
 export const logout = () => (dispatch, getState) => {
   dispatch({
       type: C.CLEAR_TOKEN

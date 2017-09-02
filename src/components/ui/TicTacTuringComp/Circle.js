@@ -5,6 +5,7 @@ import {
   View
 } from 'react-native';
 
+// A 'Circle' for the TicTacToe Game
 export default Circle = ({xTranslate = 0, yTranslate = 0, color}) => {
   return (
     <View style={[styles.container, {

@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { FlatList, StyleSheet } from 'react-native';
 import GameListRow from './GameListRow';
 
+// Creates the view of the game lists in Profile
 export default class GameList extends Component {
 
   render() {

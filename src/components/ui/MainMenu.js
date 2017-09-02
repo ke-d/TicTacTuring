@@ -8,7 +8,7 @@ import {
   ActivityIndicator
 } from 'react-native';
 
-
+// The Home Page of the App
 export default class MainMenu extends Component {
   static navigationOptions = { title: 'Welcome to TicTacTuring', };
   constructor(props) {
@@ -24,6 +24,8 @@ export default class MainMenu extends Component {
   componentWillReceiveProps(nextProps) {
     const { navIndex, logout, client } = nextProps;
     const thisComponentIndex = 0;
+    // There's no built in way to figure out when the user clicks back so this is a workaround,
+    // When the user clicks back on the Profile page, clear the cache of apollo and logout
     if(this.props.navIndex > navIndex && navIndex === thisComponentIndex) {
       console.log("back to MainMenu");
       client.resetStore();

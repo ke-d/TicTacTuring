@@ -3,6 +3,7 @@ import Profile from '../components/containers/Profile';
 
 import TicTacTuring from '../components/containers/TicTacTuring';
 
+// All the routes of TicTacTuring
 const Routes = {
   Home: { screen: MainMenu },
   Profile: { screen: Profile },
